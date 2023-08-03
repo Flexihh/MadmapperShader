@@ -7,7 +7,6 @@
 { "LABEL": "Cells/Cells X", "NAME": "mat_cells_x", "TYPE": "int", "MIN": 1, "MAX": 32, "DEFAULT": 1 },
 { "LABEL": "Cells/Cells Y", "NAME": "mat_cells_y", "TYPE": "int", "MIN": 1, "MAX": 32, "DEFAULT": 1 },
 { "LABEL": "Global/Line Width", "NAME": "mat_width", "TYPE": "float", "DEFAULT": 0.1, "MIN": 0.0, "MAX": 1.0 },
-{ "LABEL": "Global/Translation", "NAME": "mat_base_transition", "TYPE": "float", "DEFAULT": 0.0, "MIN": 0.0, "MAX": 1.0 },
 { "LABEL": "Global/Repeat", "NAME": "mat_repeat", "TYPE": "int", "DEFAULT": 1, "MIN": 1, "MAX": 16 },
 { "LABEL": "Global/Polar Coord", "NAME": "mat_polar_coordinates", "TYPE": "bool", "DEFAULT": false, "FLAGS": "button" },
 { "LABEL": "Global/Symetry", "NAME": "mat_symetric", "TYPE": "bool", "DEFAULT": false, "FLAGS": "button" },
@@ -39,12 +38,7 @@ vec4 materialColorForPixel(vec2 texCoord)
 float timeProgress = min(1.0, max(0.0, mat_time / mat_duration));
 
 // Setze die Translation, um die Linie von links nach rechts zu bewegen
-float translateX = mat_base_transition + timeProgress;
-
-// Wenn die Translation den Bildschirmrand erreicht, setze sie zurück, um eine kontinuierliche Animation zu gewährleisten
-if (translateX >= 1.0) {
-translateX -= 1.0;
-}
+float translateX = 0.0 + timeProgress;
 
 // Setze Center und Translation
 mat3 linePatternsMatrix = mat3(1, 0, -0.5 + translateX,
