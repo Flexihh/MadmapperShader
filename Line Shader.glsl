@@ -26,14 +26,14 @@ vec4 materialColorForPixel(vec2 texCoord)
 float timeProgress = min(1.0, max(0.0, mat_time / mat_duration));
 
 // Setze die Translation, um die Linie von links nach rechts zu bewegen
-float translateX = (mat_reverse_direction ? 1.0 - timeProgress : timeProgress); // Änderung hier
+float translateX = (mat_reverse_direction ? -timeProgress : timeProgress);
 
 vec2 p = texCoord;
 vec2 cellSize = vec2(1.0, 1.0);
-p = p / cellSize;
+p = mod(p, cellSize) / cellSize;
 
 vec2 uv = (vec3(p, 1) * mat3(1, 0, -0.5 + translateX, 0, 1, -0.5, 0, 0, 1)).xy;
-float dist = uv.x - 0.5;
+float dist = fract(uv.x) - 0.5;
 
 float value;
 if (abs(dist) < 0.01)
