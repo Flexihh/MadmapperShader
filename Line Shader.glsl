@@ -5,7 +5,8 @@
 "TAGS": "line,graphic",
 "INPUTS": [
 { "LABEL": "Time/Duration", "NAME": "mat_duration", "TYPE": "float", "MIN": 0.0, "MAX": 60.0, "DEFAULT": 5.0 },
-{ "LABEL": "Translation/Reverse Direction", "NAME": "mat_reverse_direction", "TYPE": "bool", "DEFAULT": false, "FLAGS": "button" }
+{ "LABEL": "Translation/Reverse Direction", "NAME": "mat_reverse_direction", "TYPE": "bool", "DEFAULT": false, "FLAGS": "button" },
+{ "LABEL": "Shader Width", "NAME": "mat_shader_width", "TYPE": "float", "MIN": 0.0, "MAX": 1.0, "DEFAULT": 0.01 } // Neue Eingabe hinzugefügt
 ],
 "GENERATORS": [
 {
@@ -26,7 +27,7 @@ vec4 materialColorForPixel(vec2 texCoord)
 float timeProgress = min(1.0, max(0.0, mat_time / mat_duration));
 
 // Berechne die Breite des Shaders
-float shaderWidth = 0.01;
+float shaderWidth = mat_shader_width; // Verwenden Sie den Wert der neuen Eingabe
 
 // Setze die Translation, um die Linie von links nach rechts zu bewegen
 float translateX = (mat_reverse_direction ? 1.0 + shaderWidth - timeProgress : -1.0 - shaderWidth + timeProgress);
