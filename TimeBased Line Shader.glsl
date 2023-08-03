@@ -61,7 +61,8 @@ p.x = length(x);
 p.y = atan(x.y, x.x) * 0.5 / M_PI + 0.5;
 }
 
-float halfFinalWidth = mat_width * 0.5;
+// Änderung hier: Invertiere die Linienbreite
+float halfFinalWidth = (1.0 - mat_width) * 0.5;
 
 vec2 uv = (vec3(p, 1) * linePatternsMatrix).xy;
 float dist = fract(uv.x) - 0.5;
