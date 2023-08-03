@@ -1,4 +1,3 @@
-
 /*{
 "CREDIT": "Paulhh",
 "DESCRIPTION": "TimeBased Line Shader",
@@ -16,7 +15,8 @@
 { "LABEL": "Color/Back Color", "NAME": "mat_back_color", "TYPE": "color", "DEFAULT": [ 0.0, 0.0, 0.0, 1.0 ] },
 { "LABEL": "Color/Brightness", "NAME": "mat_brightness", "TYPE": "float", "MIN": -1.0, "MAX": 1.0, "DEFAULT": 0.0 },
 { "LABEL": "Color/Contrast", "NAME": "mat_contrast", "TYPE": "float", "MIN": 1.0, "MAX": 3.0, "DEFAULT": 1 },
-{ "LABEL": "Time/Duration", "NAME": "mat_duration", "TYPE": "float", "MIN": 0.0, "MAX": 60.0, "DEFAULT": 5.0 }
+{ "LABEL": "Time/Duration", "NAME": "mat_duration", "TYPE": "float", "MIN": 0.0, "MAX": 60.0, "DEFAULT": 5.0 },
+{ "LABEL": "Edge/Edge Softness", "NAME": "mat_edge_softness", "TYPE": "float", "MIN": 0.0, "MAX": 1.0, "DEFAULT": 0.0 }
 ],
 "GENERATORS": [
 {
@@ -64,7 +64,7 @@ p.y = atan(x.y, x.x) * 0.5 / M_PI + 0.5;
 float halfFinalWidth = mat_width * 0.5;
 
 vec2 uv = (vec3(p, 1) * linePatternsMatrix).xy;
-float dist = fract(uv.x + halfFinalWidth) - halfFinalWidth;
+float dist = fract(uv.x) - 0.5;
 
 float value;
 if (abs(dist) < halfFinalWidth)
@@ -75,6 +75,9 @@ else
 {
 value = 0;
 }
+
+// Apply edge softness
+value = smoothstep(-mat_edge_softness + halfFinalWidth, mat_edge_softness + halfFinalWidth, abs(dist));
 
 vec4 finalColor = mix(mat_back_color, mat_front_color, value);
 finalColor.rgb = mix(finalColor.rgb, 1 - finalColor.rgb, mat_brightness);
